@@ -1,0 +1,8 @@
+[
+  {
+    "title": "List Token Prefixes",
+    "command": "avn user access-token list --json | jq \"map(.token_prefix)\"",
+    "description": "Retrieves all the token prefixes. Along with their descriptions",
+    "output": "[\n\"84AubJ/wyVy9\",\n\"uyU2t/Q++EJm\"\n]"
+  }
+]
