@@ -2,7 +2,7 @@
   {
     "title": "List all the project names",
     "command": "avn project list --json | jq \".[0].project_name\"",
-    "description": "Retrieves all the token prefixes. Along with their descriptions",
+    "description": "Creates a list of all the project names",
     "output": "<PROJECT1>\n<PROJECT2>"
   }
 ]
