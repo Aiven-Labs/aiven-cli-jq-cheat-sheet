@@ -1,8 +1,20 @@
 [
   {
-    "title": "List Token Prefixes",
-    "command": "avn user access-token list --json | jq \"map(.token_prefix)\"",
+    "title": "Create A New User Access-Token",
+    "command": "avn user access-token create --json | jq \"map({description, full_token})\"",
     "description": "Retrieves all the token prefixes. Along with their descriptions",
-    "output": "[\n\"84AubJ/wyVy9\",\n\"uyU2t/Q++EJm\"\n]"
+    "output": "[{\"description\":\"test please delete\",\"full_token\":\"<REDACTED>\"}]"
+  },
+  {
+    "title": "List Access-Token Prefixes",
+    "command": "avn user access-token list --json | jq \"map({description, token_prefix})\"",
+    "description": "Retrieves all the token prefixes. Along with their descriptions",
+    "output": "[{\"description\": \"Testing List\", \"token_prefix\": \"<REDACTED>\"}, {\"description\": null, \"token_prefix\": \"<REDACTED>\"}]"
+  },
+  {
+    "title": "List Information on a Single Token Prefix",
+    "command": "avn user access-token list --json | jq 'map(select(.token_prefix == \"<TOKEN>\"))'",
+    "description": "Retrieves token prefixes and displays all the information. NOTE: You will not be able to see the full token",
+    "output": "[{\"description\": \"Testing List\", \"token_prefix\": \"84AubJ/wyVy9\"}, {\"description\": null, \"token_prefix\": \"<REDACTED>\"}]"
   }
 ]

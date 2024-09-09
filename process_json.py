@@ -1,10 +1,13 @@
 import dataclasses
 import json
 import pathlib
+from typing import Generator
 
+from click import command
+from slugify import slugify
 from textual.app import App
 from textual.screen import Screen
-from textual.widgets import MarkdownViewer, Footer, OptionList, Markdown 
+from textual.widgets import MarkdownViewer, Footer, Tab, Tabs, Static
 
 import typer
 
@@ -18,6 +21,10 @@ class Entry:
     title: str
     description: str
     output: str
+
+    @property
+    def slug(self) -> str:
+        """The slugified version of the title"""
 
     def __str__(self):
         return f"""
@@ -39,45 +46,37 @@ class Entry:
         return self.__str__()
 
 
-JSON_PATH = pathlib.Path("data/user.json")
-JSON_ENTRIES = [Entry(**entry) for entry in json.loads(JSON_PATH.read_text())]
+ROOT_JSON_DIRECTORY = pathlib.Path("data")
+JSON_PATHS = ("User", "Project")
 
 WELCOME_TEXT = """ # Welcome to the Aiven CLI + JQ CookBook"""
 
 
-    class Recipe(Static):
-
-
-
-class OptionScreen(Screen):
-    """Displays the selection list for a Section"""
-
-    action_enter(self):
-        self.app.push_screen()
-
-    def compose(self):
-        yield OptionList(*[entry.title for entry in JSON_ENTRIES])
+def load_entries(command_option) -> list[dict[str, str]]:
+    json_path = ROOT_JSON_DIRECTORY / pathlib.Path(command_option.lower()).with_suffix(
+        ".json"
+    )
+    entries = [str(Entry(**entry)) for entry in json.loads(json_path.read_text())]
+    return "\n\n".join(entries)
 
 
 class CookBook(App):
+    active_command_option = "user"
 
     BINDINGS = [
         ("q", "quit", "Immediately Close the Program"),
-        ("a", "all_cookbooks"),
-        ("f", "focus"),
         ("c", "copy"),
-        ("s", "select"),
     ]
-
-    def action_select(self):
-        self.push_screen(OptionScreen())
 
     def compose(self):
         """Given a filename"""
-        yield MarkdownViewer(
-            WELCOME_TEXT, show_table_of_contents=False, id="main_window"
-        )
+        yield Tabs(*[path for path in JSON_PATHS], id="selection-tab")
+        yield MarkdownViewer(id="markdown-viewer")
         yield Footer()
+
+    def on_tabs_tab_activated(self, event: Tabs.TabActivated) -> None:
+        viewer = self.query_one("#markdown-viewer")
+        viewer.document.update(load_entries(str(event.tab.label)))
 
     def action_quit(self):
         self.exit()
