@@ -1,14 +1,14 @@
 [
   {
     "title": "List all the service_names in a single project",
-    "command": "avn services list --json | jq \"[].service_name\"",
+    "command": "avn service list --json | jq \"[].service_name\"",
     "description": "This retrieves a list of all the services and outputs the names on a separate line.\n\nYou can use the `select` method to find other values",
     "output": "\"example-clickhouse-service\""
   },
   {
     "title": "Get the endpoint URI of a service",
-    "description": "",
-    "command": "",
-    "output": ""
+    "description": "Get all of the services the user account has access to and return each services name and service endpoint uri",
+    "command": "avn service list --json | jq \"map({service_name, service_uri})\"",
+    "output": "[{\"service_name\":\"example-clickhouse-service\",\"service_uri\":\"<SERVICE_URI>\"}]"
   }
 ]
