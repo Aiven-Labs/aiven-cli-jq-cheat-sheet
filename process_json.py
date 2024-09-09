@@ -47,7 +47,7 @@ class Entry:
 
 
 ROOT_JSON_DIRECTORY = pathlib.Path("data")
-JSON_PATHS = (entry.stem.title() for entry in ROOT_JSON_DIRECTORY.iterdir())
+JSON_PATHS = sorted((entry.stem.title() for entry in ROOT_JSON_DIRECTORY.iterdir()))
 
 WELCOME_TEXT = """ # Welcome to the Aiven CLI + JQ CookBook"""
 
