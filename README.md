@@ -4,54 +4,32 @@
 
 This is a downloadable interactive guide meant to help you use the [Aiven CLI].
 
-This guide will help you to quickly grab the information that you need to create, manage, and monitor aiven services.
+This guide will help you to quickly grab the information that you need to create, manage, and monitor Aiven services.
 
 ## Using this project
 
+You will also need the following:
+
+- an [Aiven] account
+- [Aiven CLI]
+- [JQ]
+
 ### Installation
 
-- Fork this project (and maybe give it a ⭐)
-
-### Using the CLI
-
-- Create an [Aiven Account][Aiven] (If you don't have one already)
-- Install the [Aiven CLI]
-
-#### Using Homebrew (MacOS and Unix Systems)
-
-- Install [Homebrew](https://brew.sh)
-- Install Aiven CLI
+#### Option 1: installing with pip
 
 ```sh
-brew install aiven-client
+python -m pip install git+https://github.com/Aiven-Labs/aiven-cli-jq-cookbook.git
 ```
 
-#### Using pipx (All Systems)
+#### Option 2: manually download and run this project
 
-- Install [pipx](https://pipx.pypa.io/latest/installation/)
-- Install the Aiven CLI
-
-```sh
-pipx install aiven-client
-```
-
-#### Using pip (All Platforms)
-
-- Install [Python](https://www.python.org/downloads/)
-- Install the Aiven CLI
-
-```shell
-python -m pip install --user aiven-client
-```
-
-#### Log into your Aiven Account from the CLI
-
-```sh
-avn user login
-
-```
-
-### Install your dependencies
+- Fork and Clone this project (and maybe give it a ⭐)
+- install dependencies
+  ```shell
+  python -m pip install -r requirements.txt
+  ```
 
 [Aiven]: https://aiven.io
 [Aiven CLI]: https://aiven.io/docs/tools/cli
+[JQ]: https://jqlang.github.io/jq/
