@@ -1,16 +1,11 @@
 import dataclasses
+import importlib
 import json
 import pathlib
-from typing import Generator
-
-from click import command
-from slugify import slugify
-from textual.app import App
-from textual.screen import Screen
-from textual.widgets import MarkdownViewer, Footer, Tab, Tabs, Static
 
 import typer
-
+from textual.app import App
+from textual.widgets import Footer, Header, MarkdownViewer, Tabs
 
 typer = typer.Typer()
 
@@ -21,10 +16,6 @@ class Entry:
     title: str
     description: str
     output: str
-
-    @property
-    def slug(self) -> str:
-        """The slugified version of the title"""
 
     def __str__(self):
         return f"""
@@ -46,8 +37,8 @@ class Entry:
         return self.__str__()
 
 
-ROOT_JSON_DIRECTORY = pathlib.Path("data")
-JSON_PATHS = sorted((entry.stem.title() for entry in ROOT_JSON_DIRECTORY.iterdir()))
+ROOT_JSON_DIRECTORY = importlib.resources.files() / pathlib.Path("data")
+JSON_PATHS = sorted(entry.stem.title() for entry in ROOT_JSON_DIRECTORY.iterdir())
 
 WELCOME_TEXT = """ # Welcome to the Aiven CLI + JQ CookBook"""
 
@@ -62,6 +53,7 @@ def load_entries(command_option) -> list[dict[str, str]]:
 
 class CookBook(App):
     active_command_option = "user"
+    TITLE = "Aiven CLI + JQ Cheat Sheet"
 
     BINDINGS = [
         ("q", "quit", "Immediately Close the Program"),
@@ -70,6 +62,7 @@ class CookBook(App):
 
     def compose(self):
         """Given a filename"""
+        yield Header()
         yield Tabs(*[path for path in JSON_PATHS], id="selection-tab")
         yield MarkdownViewer(id="markdown-viewer")
         yield Footer()
@@ -82,5 +75,10 @@ class CookBook(App):
         self.exit()
 
 
+def app():
+    cookbook = CookBook()
+    cookbook.run()
+
+
 if __name__ == "__main__":
-    CookBook().run()
+    app()

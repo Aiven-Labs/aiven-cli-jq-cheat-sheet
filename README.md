@@ -2,34 +2,56 @@
 
 ## What is this?
 
-Something
+This is a downloadable interactive guide meant to help you use the [Aiven CLI].
 
-## What do you need first?
+This guide will help you to quickly grab the information that you need to create, manage, and monitor aiven services.
 
-- Create an Aiven Account
-- Download the Aiven CLI
+## Using this project
 
-### Using pip
+### Installation
 
-```python
-python -m pip install --user aiven-client
-```
+- Fork this project (and maybe give it a ⭐)
 
-### Using Homebrew
+### Using the CLI
+
+- Create an [Aiven Account][Aiven] (If you don't have one already)
+- Install the [Aiven CLI]
+
+#### Using Homebrew (MacOS and Unix Systems)
+
+- Install [Homebrew](https://brew.sh)
+- Install Aiven CLI
 
 ```sh
 brew install aiven-client
 ```
 
-### Using pipx
+#### Using pipx (All Systems)
+
+- Install [pipx](https://pipx.pypa.io/latest/installation/)
+- Install the Aiven CLI
 
 ```sh
 pipx install aiven-client
 ```
 
-### Log into your Aiven Account from the CLI
+#### Using pip (All Platforms)
+
+- Install [Python](https://www.python.org/downloads/)
+- Install the Aiven CLI
+
+```shell
+python -m pip install --user aiven-client
+```
+
+#### Log into your Aiven Account from the CLI
 
 ```sh
 avn user login
+
 ```
 
+### Install your dependencies
+
+[Aiven]: https://aiven.io
+[Aiven CLI]: https://aiven.io/docs/tools/cli

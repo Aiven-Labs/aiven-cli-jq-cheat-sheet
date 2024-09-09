@@ -1,0 +1,38 @@
+[build-system]
+requires = ["setuptools", "setuptools_scm", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "avn_jq_cookbook"
+dynamic = ["version"]
+description = "A quick reference guide built in Textual meant to be a quick reference"
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = [
+  "textual"
+]
+
+[tool.setuptools_scm]
+local_scheme = "no-local-version"
+# version_scheme = "python-simplified-semver"
+
+[project.urls]
+homepage = "https://github.com/aiven-labs/aiven-cli-jq-cookbook"
+repository = "https://github.com/aiven-labs/aiven-cli-jq-cookbook"
+
+[tool.setuptools.package-data]
+"*" = ["*.json"]
+
+[project.scripts]
+avnjq = "avn_jq_cookbook.app:app"
+
+[tool.semantic_release]
+version_toml = "pyproject.toml:project.version"
+branch = "main"
+
+[tool.ruff]
+lint.select = ["E", "F", "I", "UP"]
+target-version = "py312"
+lint.pycodestyle.max-line-length = 120
+src = ["avn_jq_cookbook"]
+lint.ignore-init-module-imports = true
