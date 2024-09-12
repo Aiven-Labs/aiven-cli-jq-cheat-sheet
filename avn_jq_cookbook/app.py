@@ -6,6 +6,10 @@ import pathlib
 import typer
 from textual.app import App
 from textual.widgets import Footer, Header, MarkdownViewer, Tabs
+import pyperclip
+from textual.binding import Binding
+from textual import events
+
 
 typer = typer.Typer()
 
@@ -43,7 +47,7 @@ JSON_PATHS = sorted(entry.stem.title() for entry in ROOT_JSON_DIRECTORY.iterdir(
 WELCOME_TEXT = """ # Welcome to the Aiven CLI + JQ CookBook"""
 
 
-def load_entries(command_option) -> list[dict[str, str]]:
+def load_entries(command_option) -> str:
     json_path = ROOT_JSON_DIRECTORY / pathlib.Path(command_option.lower()).with_suffix(
         ".json"
     )
@@ -56,8 +60,8 @@ class CookBook(App):
     TITLE = "Aiven CLI + JQ Cheat Sheet"
 
     BINDINGS = [
-        ("q", "quit", "Immediately Close the Program"),
-        ("c", "copy"),
+        ("q", "quit", "Close the Program"),
+        Binding("c", "copy", "Copy Command", show=True),
     ]
 
     def compose(self):
@@ -70,10 +74,24 @@ class CookBook(App):
     def on_tabs_tab_activated(self, event: Tabs.TabActivated) -> None:
         viewer = self.query_one("#markdown-viewer")
         viewer.document.update(load_entries(str(event.tab.label)))
+    
+    def action_copy(self):
+        """Copy the selected command to clipboard"""
+        viewer = self.query_one("#markdown-viewer")
+        selected_text = viewer.get_selected_text()
+        
+        if selected_text and selected_text.startswith('`') and selected_text.endswith('`'):
+            command = selected_text.strip('`')
+            pyperclip.copy(command)
+            self.notify("Command copied to clipboard!")
+        else:
+            self.notify("Please select a command to copy", severity="warning")
+
 
     def action_quit(self):
         self.exit()
 
+    
 
 def app():
     cookbook = CookBook()
