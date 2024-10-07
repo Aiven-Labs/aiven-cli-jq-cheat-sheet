@@ -9,8 +9,8 @@ description = "A quick reference guide built in Textual meant to be a quick refe
 readme = "README.md"
 requires-python = ">=3.10"
 dependencies = [
-  "textual"
-  "typer"
+  "textual",
+  "typer",
 ]
 
 [tool.setuptools_scm]
