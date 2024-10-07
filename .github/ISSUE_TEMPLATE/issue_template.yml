@@ -1,0 +1,33 @@
+name: Issue or Suggestion
+description: Report an issue or propose an idea for the project
+body:
+  - type: markdown
+    attributes:
+      value: "Thank you for your contribution to the project."
+  - type: textarea
+    id: description
+    attributes:
+      label: Description
+      description: Please describe the issue or suggestion in detail.
+    validations:
+      required: true
+  - type: textarea
+    id: rationale
+    attributes:
+      label: Rationale
+      description: Please explain why this is important for the project.
+  - type: textarea
+    id: additional_information
+    attributes:
+      label: Additional Information
+      description: Any other relevant details or context?
+  - type: dropdown
+    id: contribution_ability
+    attributes:
+      label: Are you able to contribute to this?
+      options:
+        - Yes, I can implement this
+        - I can contribute with guidance
+        - I cannot contribute directly
+    validations:
+      required: true
