@@ -6,10 +6,6 @@ import pathlib
 import typer
 from textual.app import App
 from textual.widgets import Footer, Header, MarkdownViewer, Tabs
-import pyperclip
-from textual.binding import Binding
-from textual import events
-
 
 typer = typer.Typer()
 
